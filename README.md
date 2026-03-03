@@ -1,5 +1,5 @@
 # Project 2 Student Hub: Lost in the Scroll
-
+[https://brigidskojec.github.io/scrollytelling-Rock-Conditions-Brigid/]
 Student-facing repo for final project execution and turn-in.
 
 ## Why This Repo Uses Issues
