@@ -1,0 +1,235 @@
+/* --- 1. FONTS & RESET --- */
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Rubik+Glitch&family=Sigmar&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- 2. GLOBAL BODY & BACKGROUND --- */
+body {
+  /* Uses your dusty purple background variable */
+  background-color: var(--brand-colors-bg-color, #a68195); 
+  font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  overflow-x: hidden; /* Stops horizontal scrolling issues */
+}
+
+/* --- 3. TYPOGRAPHY (Headers vs Paragraphs) --- */
+h1, h2, h3 {
+  /* Using Sigmar for those chunky red headers */
+  font-family: var(--fonts-font-family-body, 'Sigmar', cursive); 
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: var(--font-size-font-size-xxxl, 64px);
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: var(--font-size-font-size-xl, 48px);
+  margin-bottom: 32px;
+}
+
+p {
+  /* Clean, readable text for the story */
+  font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
+  font-size: var(--font-size-font-size-m, 20px);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* --- 4. SECTION RHYTHM & LAYOUT --- */
+.section {
+  min-height: 100vh;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.section__content {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10; /* Keeps your text above the background layers */
+}
+
+/* --- 5. COMPONENT STYLES (From your Figma) --- */
+
+/* The Torn Paper look (Variables & Tokens sections) */
+.paper-box {
+  background-color: var(--neutrals-nuetral-00, #ffffff);
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  padding: 40px;
+  max-width: 500px;
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.2);
+  transform: rotate(-1deg);
+  border-radius: 2px 8px 3px 5px; /* Gives it a slightly imperfect edge */
+}
+
+/* The Blue Blobs (Events section) */
+.blue-blob {
+  background-color: var(--brand-colors-accent-lightblue, #6bb3f2);
+  color: var(--neutrals-nuetral-00, #ffffff);
+  padding: 40px;
+  max-width: 400px;
+  /* This CSS trick makes a perfect organic blob shape! */
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+  box-shadow: 3px 5px 10px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+/* --- GLOBAL BACKGROUND WALLS --- */
+.background-walls {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; 
+  pointer-events: none; 
+  opacity: 0; /* <-- THIS IS THE ONLY NEW LINE! It hides them on load. */
+}
+
+.wall {
+  position: absolute; 
+  height: 100vh; 
+  object-fit: cover; 
+}
+
+.wall--left {
+  left: 0;
+  width: 25vw; 
+}
+
+.wall--right {
+  right: 0;
+  width: 25vw;
+}
+
+/* Hero and Image Styles */
+.hero-climber-placeholder {
+  width: 100%;
+  max-width: 600px;
+  margin: 40px auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-climber {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.climber-image-target {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  font-weight: bold;
+}
+
+.puzzle-wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.puzzle-card {
+  perspective: 1000px;
+  min-height: 300px;
+}
+
+.puzzle-front,
+.puzzle-back {
+  padding: 30px;
+  background-color: var(--neutrals-nuetral-00, #ffffff);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brain-zoom-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px 0;
+}
+
+/* Section Variants / Hero Layout */
+.section--hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Pushes the content to the left */
+  padding-left: 8vw; /* Breathing room from the left edge */
+  overflow: hidden; /* Keeps the giant rock from causing horizontal scrolling */
+}
+
+.section--hero .section__content {
+  text-align: left;
+  max-width: 50%; /* Keeps the text on the left half of the screen */
+  margin: 0; 
+  z-index: 10;
+}
+
+/* --- THE GIANT FLOATING CLIFF --- */
+.floating-cliff {
+  position: absolute;
+  right: -5%; /* Pushes it slightly off the right edge */
+  bottom: -5%; /* Pushes it below the screen edge */
+  height: 110%; /* Makes the rock massive */
+  width: auto; 
+  z-index: 5;
+  animation: float 6s ease-in-out infinite; 
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); } 
+  100% { transform: translateY(0px); }
+}
+
+
+/* Button Styles */
+.btn-toggle {
+  background-color: var(--brand-colors-accent-lightblue, #6bb3f2);
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  border: none;
+  padding: 15px 40px;
+  font-size: var(--font-size-font-size-m, 20px);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-toggle:hover {
+  background-color: #5aa5e8;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 20px;
+  }
+  
+  .hero-climber-placeholder {
+    max-width: 300px;
+  }
+  
+  h1 {
+    font-size: var(--font-size-font-size-xxl, 48px);
+  }
+  
+  h2 {
+    font-size: var(--font-size-font-size-l, 36px);
+  }
+}

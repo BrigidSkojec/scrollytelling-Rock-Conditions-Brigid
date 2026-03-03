@@ -1,0 +1,82 @@
+/* Collection name: Colors */
+/* Mode: Light */
+:root {
+    /* Collection name: Color primitives */
+/* Mode: Mode 1 */
+  --grey-grey-00: #ffffff;
+  --grey-grey-80: #21161c;
+  --grey-grey-70: #42333b;
+  --grey-grey-40: #a68195;
+  --grey-grey-30: #9d8793;
+  --grey-grey-60: #4e3e47;
+  --grey-grey-50: #634d59;
+  --grey-grey-20: #af9ca7;
+  --grey-grey-90: #19030f;
+  --grey-grey-10: #e2d2e4;
+  --yellow-orange-yellow-10: #fff2da;
+  --yellow-orange-orange-30: #f24e29;
+  --yellow-orange-orange-20: #ff8266;
+  --yellow-orange-yellow-50: #c1771d;
+  --yellow-orange-yellow-40: #f29e38;
+  --yellow-orange-orange-10: #ffc9bd;
+  --yellow-orange-yellow-60: #96580c;
+  --yellow-orange-yellow-30: #f2b138;
+  --yellow-orange-orange-40: #b52809;
+  --yellow-orange-yellow-20: #ffd78c;
+  --yellow-orange-red-50: #59202b;
+
+/* Collection name: Color tokens */
+/* Mode: Mode light */
+
+  --brand-colors-bg-color: var(--grey-grey-40);
+  --brand-colors-primary-yellow: #f2b138;
+  --brand-colors-accent-yellow: #f29e38;
+  --brand-colors-accent-orange: #f24e29;
+  --brand-colors-accent-lightblue: #6bb3f2;
+  --brand-colors-accent-darkblue: #0487d9;
+  --brand-colors-text-color-secondary: var(--yellow-orange-red-50);
+  --neutrals-neutral-00: #ffffff;
+  --neutrals-neutral-99: #0e0000;
+
+  --color-bg: var(--brand-colors-bg-color);
+  --color-text: var(--brand-colors-text-color-secondary);
+  --color-surface: var(--neutrals-neutral-00);
+  --color-text-strong: var(--neutrals-neutral-99);
+}
+
+/* Collection name: Colors */
+/* Mode: Dark */
+[data-theme="dark"]{
+  --brand-colors-bg-color: var(--yellow-orange-red-50);
+  --brand-colors-primary-yellow: #f2b138;
+  --brand-colors-accent-yellow: #f29e38;
+  --brand-colors-accent-orange: #f24e29;
+  --brand-colors-accent-lightblue: #6bb3f2;
+  --brand-colors-accent-darkblue: #0487d9;
+  --brand-colors-text-color-secondary: var(--grey-grey-00);
+  --neutrals-neutral-00: var(--yellow-orange-red-50);
+  --neutrals-neutral-99: #0e0000;
+
+  --color-bg: var(--brand-colors-bg-color);
+  --color-text: var(--brand-colors-text-color-secondary);
+  --color-surface: var(--neutrals-neutral-00);
+  --color-text-strong: var(--neutrals-neutral-99);
+}
+
+/* Collection name: Typography */
+/* Mode: Mode 1 */
+:root {
+  --fonts-font-family-body: "Sigmar", sans-serif;
+  --fonts-font-family-headers: "Inclusive Sans", sans-serif;
+  --fonts-font-family-accent: "Rubik Glitch", sans-serif;
+  --font-size-font-size-xxxl: 64px;
+  --font-size-font-size-xl: 48px;
+  --font-size-font-size-l: 32px;
+  --font-size-font-size-m: 20px;
+  --font-size-font-size-s: 14px;
+  --font-size-font-size-xs: 10px;
+  --line-space-title: 80px;
+}
+
+
+

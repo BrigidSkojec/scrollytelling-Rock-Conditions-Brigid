@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocky Conditions: Scaling JavaScript</title>
+  
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Rubik+Glitch&family=Sigmar&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+</head>
+<body>
+
+<div class="background-walls">
+    <img src="assets/svgs/left-wall.svg" alt="Left climbing wall" class="wall wall--left">
+    <img src="assets/svgs/right-wall.svg" alt="Right climbing wall" class="wall wall--right">
+</div>
+
+  <main>
+    <section class="section section--hero" id="hero">
+      <div class="section__content">
+        <h1>Rocky Conditions:<br>Scaling JavaScript</h1>
+        <p>A journey of trying not to fall.</p>
+        <div class="hero-climber-placeholder">
+          <img src="assets/images/cliff-side.png" alt="Climber on a cliff side" class="hero-climber">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--chapter" id="variables">
+      <div class="section__content">
+        <h2>The Beta: Naming Things (Variables)</h2>
+        <p>When it comes to climbing, every route has a rating. The higher the number, the harder it is. Currently, I am projecting around a V5.</p>
+        <p>Let’s say I enter the gym. I tune the noise out to scope out a V5 that intrigues me. Before I even chalk up, I have to identify the pieces. <em>That’s a crimp. That’s a jug. That’s a terrible sloper.</em> I give these holds names and store them in my brain.</p>
+        <p>JavaScript variables are my mental sticky notes. They are the names I give to pieces of data so I can reference them later. We define these with <code>let</code> and <code>const</code>. <code>let</code> allows you to change the values later if need be—like realizing a crimp is actually a pinch once you're on the wall.</p>
+      </div>
+    </section>
+
+    <section class="section section--chapter section--dark" id="events">
+      <div class="section__content">
+        <h2>The False Start: Listening (Events)</h2>
+        <p>Now it is time to climb. I start my hands at the taped holds. I pull on, put my foot up, and as soon as I leave the ground—my foot slips right off.</p>
+        <p>Learning JS feels exactly like this false start. In JS, Events are the things that happen to trigger a response. Me grabbing a hold is a click event. My body reacting is the function running. If I don't move, no code runs. In theory, this is straightforward. But in practice? Remembering the exact syntax and formatting for an Event Listener is the hardest part.</p>
+      </div>
+    </section>
+
+    <section class="section section--chapter" id="conditionals">
+      <div class="section__content">
+        <h2>Mid-Route Panic: Decision Making (Conditionals)</h2>
+        <div class="puzzle-wrapper">
+          <div class="puzzle-card">
+            <div class="puzzle-front">
+              <p>[Puzzle Climber Image Assembling...]</p>
+            </div>
+            <div class="puzzle-back">
+              <p>I watch experienced developers code with the same awe and confusion I feel watching someone casually flash a V8. Then come the Conditionals.</p>
+              <p>I reach a point on the wall where I don’t know where to go. If I match hands, I can grab the next hold. Else, I need to shift my hips to keep from falling. JavaScript is the exact same live-evaluation of state. Depending on what is happening, the code determines the next step.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--chapter section--dark" id="toggle">
+      <div class="section__content">
+        <h2>The Switch: classList.toggle</h2>
+        <p>In climbing, you exist in one of two states: you are either on the wall, or you are off the wall. Tension, or rest.</p>
+        <p>In JS, classList.toggle is how we switch between states. It is the flip of a switch. Stepping onto the wall turns the intense "project mode" on, and dropping back down to the mat toggles it back off.</p>
+        <button class="btn-toggle" type="button">Get on the wall</button>
+      </div>
+    </section>
+
+    <section class="section section--chapter" id="tokens">
+      <div class="section__content">
+        <h2>The Wall: Organization (Design Tokens)</h2>
+        <p>Think about the whole wall in a climbing gym. If every route was the exact same color, it would be utter chaos. To fix this, one route equals one color. <code>--route-color: blue</code>.</p>
+        <p>Design tokens and CSS properties are the tape and hold colors of a website. They organize the visual system, reduce redundancy, and keep things efficient.</p>
+      </div>
+    </section>
+
+    <section class="section section--chapter section--dark" id="memory">
+      <div class="section__content">
+        <h2>Muscle Memory (localStorage)</h2>
+        <div class="brain-zoom-wrapper">
+          <div class="climber-image-target">[Climber Image zooming into Head/Brain]</div>
+        </div>
+        <p>Every time you attempt a route and fall, your mind isn't erased. You don't forget the moves you just did. Your muscle memory is localStorage.</p>
+        <p>It ensures the browser remembers the actions the user takes, just like my body remembers that a specific foothold is slippery so I can adjust on the next attempt.</p>
+      </div>
+    </section>
+
+    <section class="section section--chapter" id="conclusion">
+      <div class="section__content">
+        <h2>The Send</h2>
+        <p>Overall, this has been a treacherous journey. Rocky, to say the least. I am still learning, and I am nowhere near a pro developer or a pro climber.</p>
+        <p>But I’m somewhere on the wall, and I am figuring out the next move.</p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
