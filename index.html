@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Rubik+Glitch&family=Sigmar&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Rubik+Glitch&family=Sigmar&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
@@ -24,57 +24,121 @@
 
   <main>
     <section class="section section--hero" id="hero">
+      
       <div class="section__content">
         <h1>Rocky Conditions:<br>Scaling JavaScript</h1>
         <p>A journey of trying not to fall.</p>
-        <div class="hero-climber-placeholder">
-          <img src="assets/images/cliff-side.png" alt="Climber on a cliff side" class="hero-climber">
-        </div>
       </div>
+
+      <div class="climber-stack">
+        <img src="assets/images/climber-chill.png" alt="Climber on ledge" class="climber climber--chill">
+        <img src="assets/images/climber-dangling.png" alt="Climber reaching" class="climber climber--dangling">
+      </div>
+
+      <img src="assets/images/cliff-side.png" alt="Floating rock cliff" class="floating-cliff">
+      
     </section>
 
     <section class="section section--chapter" id="variables">
       <div class="section__content">
         <h2>The Beta: Naming Things (Variables)</h2>
-        <p>When it comes to climbing, every route has a rating. The higher the number, the harder it is. Currently, I am projecting around a V5.</p>
-        <p>Let’s say I enter the gym. I tune the noise out to scope out a V5 that intrigues me. Before I even chalk up, I have to identify the pieces. <em>That’s a crimp. That’s a jug. That’s a terrible sloper.</em> I give these holds names and store them in my brain.</p>
-        <p>JavaScript variables are my mental sticky notes. They are the names I give to pieces of data so I can reference them later. We define these with <code>let</code> and <code>const</code>. <code>let</code> allows you to change the values later if need be—like realizing a crimp is actually a pinch once you're on the wall.</p>
+
+        <div class="paper-note paper-note--right">
+          <img src="assets/images/paper-strip-1.png" alt="Torn paper sticky note" class="paper-bg">
+          <div class="paper-text">
+            <p>When it comes to climbing, every route has a rating. The higher the number, the harder it is. Currently, I am projecting around a V5.</p>
+            <p>Let’s say I enter the gym. I tune the noise out to scope out a V5 that intrigues me. Before I even chalk up, I have to identify the pieces. <em>That’s a crimp. That’s a jug. That’s a terrible sloper.</em> I give these holds names and store them in my brain.</p>
+          </div>
+        </div>
+
+        <div class="paper-note paper-note--left">
+          <img src="assets/images/paper-strip-2.png" alt="Torn paper sticky note" class="paper-bg">
+          <div class="paper-text">
+            <p>JavaScript variables are my mental sticky notes. They are the names I give to pieces of data so I can reference them later. We define these with <code>let</code> and <code>const</code>. <code>let</code> allows you to change the values later if need be—like realizing a crimp is actually a pinch once you're on the wall.</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section class="section section--chapter section--dark" id="events">
-      <div class="section__content">
+    <section class="section section--chapter" id="events">
+      <div class="section__content holds-container">
         <h2>The False Start: Listening (Events)</h2>
-        <p>Now it is time to climb. I start my hands at the taped holds. I pull on, put my foot up, and as soon as I leave the ground—my foot slips right off.</p>
-        <p>Learning JS feels exactly like this false start. In JS, Events are the things that happen to trigger a response. Me grabbing a hold is a click event. My body reacting is the function running. If I don't move, no code runs. In theory, this is straightforward. But in practice? Remembering the exact syntax and formatting for an Event Listener is the hardest part.</p>
+
+        <img src="assets/svgs/text-hold-1.svg" alt="Now it is time to climb..." class="climbing-hold text-hold-1 parallax-slow">
+        <img src="assets/svgs/text-hold-2.svg" alt="It is infuriating..." class="climbing-hold text-hold-2 parallax-fast">
+        <img src="assets/svgs/text-hold-3.svg" alt="Learning JS feels exactly like..." class="climbing-hold text-hold-3 parallax-medium">
+        <img src="assets/svgs/text-grey-block-4.svg" alt="If I don't move..." class="climbing-hold text-hold-4 parallax-slow">
+
+        <img src="assets/svgs/hold-3.svg" alt="" class="climbing-hold deco-hold-1 parallax-fast">
+        <img src="assets/svgs/hold-5.svg" alt="" class="climbing-hold deco-hold-2 parallax-slow">
+        <img src="assets/svgs/hold-6.svg" alt="" class="climbing-hold deco-hold-3 parallax-medium">
+        <img src="assets/svgs/hold-7.svg" alt="" class="climbing-hold deco-hold-4 parallax-fast">
       </div>
     </section>
 
-    <section class="section section--chapter" id="conditionals">
+   <section class="section section--chapter" id="conditionals">
       <div class="section__content">
         <h2>Mid-Route Panic: Decision Making (Conditionals)</h2>
-        <div class="puzzle-wrapper">
-          <div class="puzzle-card">
+        
+        <div class="puzzle-flip-container">
+          <div class="puzzle-flip-inner">
+            
             <div class="puzzle-front">
-              <p>[Puzzle Climber Image Assembling...]</p>
+              <div class="puzzle-grid">
+                 <img src="assets/svgs/puzzle1.svg" class="puzzle-piece" alt="Puzzle piece 1">
+                 <img src="assets/svgs/puzzle2.svg" class="puzzle-piece" alt="Puzzle piece 2">
+                 <img src="assets/svgs/puzzle3.svg" class="puzzle-piece" alt="Puzzle piece 3">
+                 <img src="assets/svgs/puzzle4.svg" class="puzzle-piece" alt="Puzzle piece 4">
+                 <img src="assets/svgs/puzzle5.svg" class="puzzle-piece" alt="Puzzle piece 5">
+                 <img src="assets/svgs/puzzle6.svg" class="puzzle-piece" alt="Puzzle piece 6">
+                 <img src="assets/svgs/puzzle7.svg" class="puzzle-piece" alt="Puzzle piece 7">
+                 <img src="assets/svgs/puzzle8.svg" class="puzzle-piece" alt="Puzzle piece 8">
+                 <img src="assets/svgs/puzzle9.svg" class="puzzle-piece" alt="Puzzle piece 9">
+                 <img src="assets/svgs/puzzle10.svg" class="puzzle-piece" alt="Puzzle piece 10">
+                 <img src="assets/svgs/puzzle11.svg" class="puzzle-piece" alt="Puzzle piece 11">
+                 <img src="assets/svgs/puzzle12.svg" class="puzzle-piece" alt="Puzzle piece 12">
+                 <img src="assets/svgs/puzzle13.svg" class="puzzle-piece" alt="Puzzle piece 13">
+                 <img src="assets/svgs/puzzle14.svg" class="puzzle-piece" alt="Puzzle piece 14">
+                 <img src="assets/svgs/puzzle15.svg" class="puzzle-piece" alt="Puzzle piece 15">
+                 <img src="assets/svgs/puzzle16.svg" class="puzzle-piece" alt="Puzzle piece 16">
+                 <img src="assets/svgs/puzzle17.svg" class="puzzle-piece" alt="Puzzle piece 17">
+                 <img src="assets/svgs/puzzle18.svg" class="puzzle-piece" alt="Puzzle piece 18">
+                 <img src="assets/svgs/puzzle19.svg" class="puzzle-piece" alt="Puzzle piece 19">
+                 <img src="assets/svgs/puzzle20.svg" class="puzzle-piece" alt="Puzzle piece 20">
+                 <img src="assets/svgs/puzzle21.svg" class="puzzle-piece" alt="Puzzle piece 21">
+                 <img src="assets/svgs/puzzle22.svg" class="puzzle-piece" alt="Puzzle piece 22">
+                 <img src="assets/svgs/puzzle23.svg" class="puzzle-piece" alt="Puzzle piece 23">
+                 <img src="assets/svgs/puzzle24.svg" class="puzzle-piece" alt="Puzzle piece 24">
+              </div>
             </div>
-            <div class="puzzle-back">
+
+            <div class="puzzle-back paper-box">
               <p>I watch experienced developers code with the same awe and confusion I feel watching someone casually flash a V8. Then come the Conditionals.</p>
               <p>I reach a point on the wall where I don’t know where to go. If I match hands, I can grab the next hold. Else, I need to shift my hips to keep from falling. JavaScript is the exact same live-evaluation of state. Depending on what is happening, the code determines the next step.</p>
             </div>
+
           </div>
         </div>
+        
       </div>
     </section>
 
-    <section class="section section--chapter section--dark" id="toggle">
-      <div class="section__content">
-        <h2>The Switch: classList.toggle</h2>
-        <p>In climbing, you exist in one of two states: you are either on the wall, or you are off the wall. Tension, or rest.</p>
-        <p>In JS, classList.toggle is how we switch between states. It is the flip of a switch. Stepping onto the wall turns the intense "project mode" on, and dropping back down to the mat toggles it back off.</p>
-        <button class="btn-toggle" type="button">Get on the wall</button>
-      </div>
-    </section>
+  <section class="section section--chapter section--dark" id="toggle">
+  <div class="section__content">
+    <h2>The Switch: classList.toggle</h2>
+
+    <div class="toggle-image-container">
+        <img src="assets/images/silhouette-girl-standing.png" class="toggle-img img-off-wall" alt="Standing off wall">
+        <img src="assets/images/silhouette-of-girl-on-wall.png" class="toggle-img img-on-wall" alt="Climbing on wall">
+    </div>
+
+    <p>In climbing, you exist in one of two states: you are either on the wall, or you are off the wall. Tension, or rest.</p>
+    <p>In JS, classList.toggle is how we switch between states. It is the flip of a switch. Stepping onto the wall turns the intense "project mode" on, and dropping back down to the mat toggles it back off.</p>
+    
+    <button class="btn-toggle" id="wall-switcher" type="button">Get on the wall</button>
+  </div>
+</section>
 
     <section class="section section--chapter" id="tokens">
       <div class="section__content">

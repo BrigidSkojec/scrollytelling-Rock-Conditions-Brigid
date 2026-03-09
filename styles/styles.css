@@ -9,16 +9,14 @@
 
 /* --- 2. GLOBAL BODY & BACKGROUND --- */
 body {
-  /* Uses your dusty purple background variable */
   background-color: var(--brand-colors-bg-color, #a68195); 
   font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
   color: var(--brand-colors-text-color-secondary, #59202b);
-  overflow-x: hidden; /* Stops horizontal scrolling issues */
+  overflow-x: hidden; 
 }
 
 /* --- 3. TYPOGRAPHY (Headers vs Paragraphs) --- */
 h1, h2, h3 {
-  /* Using Sigmar for those chunky red headers */
   font-family: var(--fonts-font-family-body, 'Sigmar', cursive); 
   color: var(--brand-colors-text-color-secondary, #59202b);
   text-transform: uppercase;
@@ -36,7 +34,6 @@ h2 {
 }
 
 p {
-  /* Clean, readable text for the story */
   font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
   font-size: var(--font-size-font-size-m, 20px);
   line-height: 1.6;
@@ -58,29 +55,56 @@ p {
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
-  z-index: 10; /* Keeps your text above the background layers */
+  z-index: 10; 
 }
 
-/* --- 5. COMPONENT STYLES (From your Figma) --- */
-
-/* The Torn Paper look (Variables & Tokens sections) */
-.paper-box {
-  background-color: var(--neutrals-nuetral-00, #ffffff);
-  color: var(--brand-colors-text-color-secondary, #59202b);
-  padding: 40px;
-  max-width: 500px;
-  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.2);
-  transform: rotate(-1deg);
-  border-radius: 2px 8px 3px 5px; /* Gives it a slightly imperfect edge */
+/* --- 5. COMPONENT STYLES --- */
+/* --- PAPER NOTES (VARIABLES SECTION) --- */
+.paper-note {
+  position: relative; 
+  width: 90%;
+  max-width: 800px; 
+  margin-bottom: 60px;
+  
+  /* UPDATED: We are specifically giving the TOP more space (80px) 
+     The order is: Top (80px), Right (70px), Bottom (50px), Left (70px) */
+  padding: 80px 70px 50px 70px;
+  
+  display: flex;
+  align-items: center;
 }
 
-/* The Blue Blobs (Events section) */
+.paper-note--right {
+  margin-left: auto; 
+  margin-top: 80px; /* NEW: Pushes the first note far down from the title! */
+}
+
+.paper-note--left {
+  margin-right: auto; 
+  margin-top: 40px; /* NEW: Adds breathing room between the two notes */
+}
+
+.paper-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Forces your PNG to stretch exactly to the size of the text box */
+  z-index: 0;
+  filter: drop-shadow(5px 15px 15px rgba(0,0,0,0.15)); /* Adds a realistic floating shadow under the paper */
+}
+
+.paper-text {
+  position: relative;
+  z-index: 1; /* Pops the text up on top of the image */
+}
+
 .blue-blob {
   background-color: var(--brand-colors-accent-lightblue, #6bb3f2);
   color: var(--neutrals-nuetral-00, #ffffff);
   padding: 40px;
   max-width: 400px;
-  /* This CSS trick makes a perfect organic blob shape! */
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
   box-shadow: 3px 5px 10px rgba(0,0,0,0.1);
   margin: 20px 0;
@@ -95,7 +119,7 @@ p {
   height: 100vh;
   z-index: -1; 
   pointer-events: none; 
-  opacity: 0; /* <-- THIS IS THE ONLY NEW LINE! It hides them on load. */
+  opacity: 0; 
 }
 
 .wall {
@@ -114,31 +138,79 @@ p {
   width: 25vw;
 }
 
-/* Hero and Image Styles */
-.hero-climber-placeholder {
-  width: 100%;
-  max-width: 600px;
-  margin: 40px auto 0;
+/* --- SECTION VARIANTS / HERO LAYOUT --- */
+.section--hero {
   display: flex;
-  justify-content: center;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: flex-start; 
+  padding-left: 8vw; 
+  overflow: hidden; 
+  position: relative; 
 }
 
-.hero-climber {
-  max-width: 100%;
+.section--hero .section__content {
+  text-align: left;
+  max-width: 60%; 
+  margin: 0; 
+  z-index: 10;
+}
+
+.section--hero h1 {
+  white-space: nowrap; 
+}
+
+/* --- THE GIANT FLOATING CLIFF --- */
+.floating-cliff {
+  position: absolute;
+  right: 0; 
+  bottom: -5%; 
+  height: 100vh; 
+  width: auto; 
+  z-index: 5;
+  animation: float 6s ease-in-out infinite; 
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); } 
+  100% { transform: translateY(0px); }
+}
+
+/* --- THE CLIMBER STACK --- */
+.climber-stack {
+  position: absolute;
+  bottom: 45%; /* Puts him up on the cliff face */
+  right: 3%;   /* Anchors him near the right side of the rock */
+  width: 600px; /* The massive size you requested */
   height: auto;
-  display: block;
+  z-index: 7;
+  animation: climber-float 7s ease-in-out infinite; 
 }
 
-.climber-image-target {
+/* RESTORED: This is the class that was missing and broke everything! */
+.climber {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--brand-colors-text-color-secondary, #59202b);
-  font-weight: bold;
 }
 
+.climber--chill {
+  opacity: 1; 
+  z-index: 2; 
+}
+
+.climber--dangling {
+  opacity: 0; 
+  z-index: 1; 
+  /* Tweak these two numbers to dial in the exact hand alignment */
+  top: -80px;  
+  left: 60px;  
+}
+
+/* --- MISC STYLES --- */
 .puzzle-wrapper {
   width: 100%;
   max-width: 500px;
@@ -158,47 +230,6 @@ p {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.brain-zoom-wrapper {
-  width: 100%;
-  max-width: 400px;
-  margin: 20px 0;
-}
-
-/* Section Variants / Hero Layout */
-.section--hero {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Pushes the content to the left */
-  padding-left: 8vw; /* Breathing room from the left edge */
-  overflow: hidden; /* Keeps the giant rock from causing horizontal scrolling */
-}
-
-.section--hero .section__content {
-  text-align: left;
-  max-width: 50%; /* Keeps the text on the left half of the screen */
-  margin: 0; 
-  z-index: 10;
-}
-
-/* --- THE GIANT FLOATING CLIFF --- */
-.floating-cliff {
-  position: absolute;
-  right: -5%; /* Pushes it slightly off the right edge */
-  bottom: -5%; /* Pushes it below the screen edge */
-  height: 110%; /* Makes the rock massive */
-  width: auto; 
-  z-index: 5;
-  animation: float 6s ease-in-out infinite; 
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); } 
-  100% { transform: translateY(0px); }
-}
-
-
-/* Button Styles */
 .btn-toggle {
   background-color: var(--brand-colors-accent-lightblue, #6bb3f2);
   color: var(--brand-colors-text-color-secondary, #59202b);
@@ -217,19 +248,220 @@ p {
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 60px 20px;
-  }
+  .section { padding: 60px 20px; }
+  h1 { font-size: var(--font-size-font-size-xxl, 48px); }
+  h2 { font-size: var(--font-size-font-size-l, 36px); }
+}
+
+/* --- 6. EVENTS SECTION (SCATTERED HOLDS) --- */
+#events .holds-container {
+  min-height: 180vh; /* Makes this section extremely tall to fit both frames of your Figma */
+  position: relative; /* Acts as the anchor for the absolute positioned holds */
+}
+
+.climbing-hold {
+  position: absolute;
+  z-index: 5;
+  filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.15)); /* Adds a realistic pop off the wall */
+}
+/* --- Positioning the Text Holds --- */
+.text-hold-1 { top: 12%; left: 18%; width: 350px; } 
+.text-hold-2 { top: 48%; right: 15%; width: 280px; } /* BIG HAMMER: Pushed almost a full screen down! */
+.text-hold-3 { top: 65%; left: 15%; width: 350px; }
+.text-hold-4 { top: 85%; right: 10%; width: 480px; } 
+
+/* --- Positioning the Decorative Holds --- */
+.deco-hold-1 { top: 20%; right: 25%; width: 80px; height: auto; } 
+
+/* BIG HAMMER: Shoved this way down and into the dead center (50%) to get it off your text */
+.deco-hold-2 { top: 38%; left: 50%; width: 60px; height: auto; } 
+
+.deco-hold-3 { top: 55%; left: 35%; width: 90px; height: auto; }
+.deco-hold-4 { top: 75%; right: 40%; width: 60px; height: auto; }
+
+
+/* --- 7. CONDITIONALS SECTION (3D PUZZLE FLIP) --- */
+#conditionals {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Perfectly centers the puzzle when the screen locks */
+}
+
+.puzzle-flip-container {
+  perspective: 2000px; 
+  width: 100%;
+  max-width: 800px; 
+  margin: 40px auto; 
+}
+
+.puzzle-flip-inner {
+  position: relative;
+  width: 100%;
+}
+
+.puzzle-front {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.puzzle-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  margin: 0; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* We removed the CSS rotateY(180deg) here, we will let GSAP do it safely! */
+}
+/* --- 7. CONDITIONALS SECTION (CLEAN & SNAP) --- */
+#conditionals {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.puzzle-flip-container {
+  perspective: 2000px;
+  width: 90%;
+  max-width: 900px; /* Big enough to see, but keeps it within the content width */
+  margin: 0 auto;
+}
+
+.puzzle-flip-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+.puzzle-front, .puzzle-back {
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* --- THE GRID --- */
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 across */
+  grid-template-rows: repeat(4, 1fr);    /* 4 down */
+  gap: 0;                /* Forces pieces to touch */
+  line-height: 0;        /* Removes ghost padding */
+  width: 100%;
+  aspect-ratio: 6 / 4;   /* Matches your 6x4 piece count */
+  background: white;     /* This is your "White Box" background */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.puzzle-piece {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: fill; /* This is key: it forces the SVG to fill the grid square */
   
-  .hero-climber-placeholder {
-    max-width: 300px;
-  }
-  
-  h1 {
-    font-size: var(--font-size-font-size-xxl, 48px);
-  }
-  
-  h2 {
-    font-size: var(--font-size-font-size-l, 36px);
-  }
+  /* If the exports are still slightly off, this 1% scale bridges the gap */
+  transform: scale(1.01); 
+}
+
+/* --- THE BACK --- */
+.puzzle-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: white; /* Matches the front's white box */
+  transform: rotateY(180deg);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+/* --- 8. TOGGLE SECTION (RESTORED WITH LAYERING FIX) --- */
+
+/* This centers the section naturally on the screen as it was before */
+#toggle {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Keeps the girl from sliding off the page */
+}
+
+/* Restores standard centered text content width and position */
+#toggle .section__content {
+  width: 100%;
+  max-width: 800px; /* Or whatever your original max-width was */
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  text-align: center; /* Ensures text stays centered */
+}
+
+/* 2. Position the Girl container relative to the text box */
+.toggle-image-container {
+  position: relative;
+  width: 100%;
+  height: 350px; /* Sets a standard height for the image area above the text */
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  overflow: visible; /* CRITICAL: Allows the girl to slide OUT onto the wall */
+}
+
+/* Restores the common sizing from your original code */
+.toggle-img {
+  position: absolute;
+  height: 100%; /* Or auto and use bottom: 0 to sit on the line, as before */
+  width: auto;
+  transition: opacity 0.4s ease-in-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* --- State: Off the Wall (Standing, Centered) --- */
+.img-off-wall {
+  opacity: 1;
+  z-index: 2;
+  transform: translateX(0); /* Centered and standard */
+}
+
+/* --- State: On the Wall (Climbing, Initially Hidden and Centered) --- */
+.img-on-wall {
+  opacity: 0;
+  z-index: 1;
+  transform: translateX(0); /* Standard starting position */
+}
+
+/* --- ACTIVE STATE (When button is clicked) --- */
+
+/* Standard fade-out for the standing girl */
+body.on-the-wall .img-off-wall {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* --- THE FIGMA FIX: Girl moves over to the background walls and grows --- */
+body.on-the-wall .img-on-wall {
+  opacity: 1;
+  z-index: 2;
+  /* MAGICAL SHIFT: moves her far right onto the grey geometric panel 
+     and scales her up to look large like the cliff section */
+  transform: translateX(35vw) scale(1.15); 
+  transform-origin: center right; /* Optional: Scale happens from the right edge */
 }
