@@ -1,5 +1,5 @@
 /* --- 1. FONTS & RESET --- */
-@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Rubik+Glitch&family=Sigmar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Raleway:wght@400;700&family=Rubik+Glitch&family=Sigmar&display=swap');
 
 * {
   box-sizing: border-box;
@@ -231,20 +231,99 @@ p {
 }
 
 .btn-toggle {
-  background-color: var(--brand-colors-accent-lightblue, #6bb3f2);
-  color: var(--brand-colors-text-color-secondary, #59202b);
-  border: none;
-  padding: 15px 40px;
-  font-size: var(--font-size-font-size-m, 20px);
-  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-width: 180px;
+  padding: 12px 22px;
+  margin: 6px auto 24px;
+  background: rgba(5, 8, 1, 0.92);
+  color: #03e9f4;
+  border: 1px solid rgba(3, 233, 244, 0.45);
+  border-radius: 18px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 20px;
+  text-transform: uppercase;
+  transition: color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+  letter-spacing: 0.2em;
+  overflow: hidden;
+  font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 .btn-toggle:hover {
-  background-color: #5aa5e8;
-  transform: scale(1.05);
+  background: #03e9f4;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4,
+              0 0 20px #03e9f4,
+              0 0 42px rgba(3, 233, 244, 0.75);
+  transform: translateY(-2px);
+}
+
+.btn-toggle span {
+  position: absolute;
+  display: block;
+}
+
+.btn-toggle span:nth-child(1) {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03e9f4);
+  animation: toggle-animate-1 1s linear infinite;
+}
+
+.btn-toggle span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #03e9f4);
+  animation: toggle-animate-2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+.btn-toggle span:nth-child(3) {
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #03e9f4);
+  animation: toggle-animate-3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+.btn-toggle span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #03e9f4);
+  animation: toggle-animate-4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes toggle-animate-1 {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+@keyframes toggle-animate-2 {
+  0% { top: -100%; }
+  50%, 100% { top: 100%; }
+}
+
+@keyframes toggle-animate-3 {
+  0% { right: -100%; }
+  50%, 100% { right: 100%; }
+}
+
+@keyframes toggle-animate-4 {
+  0% { bottom: -100%; }
+  50%, 100% { bottom: 100%; }
 }
 
 @media (max-width: 768px) {
@@ -298,95 +377,66 @@ p {
 .puzzle-flip-inner {
   position: relative;
   width: 100%;
+  transform-style: preserve-3d;
+  aspect-ratio: 500 / 330;
 }
 
-.puzzle-front {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
+.puzzle-front,
 .puzzle-back {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  margin: 0; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* We removed the CSS rotateY(180deg) here, we will let GSAP do it safely! */
-}
-/* --- 7. CONDITIONALS SECTION (CLEAN & SNAP) --- */
-#conditionals {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.puzzle-flip-container {
-  perspective: 2000px;
-  width: 90%;
-  max-width: 900px; /* Big enough to see, but keeps it within the content width */
-  margin: 0 auto;
-}
-
-.puzzle-flip-inner {
-  position: relative;
-  width: 100%;
-  transform-style: preserve-3d;
-}
-
-.puzzle-front, .puzzle-back {
-  width: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
 /* --- THE GRID --- */
 .puzzle-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 across */
-  grid-template-rows: repeat(4, 1fr);    /* 4 down */
-  gap: 0;                /* Forces pieces to touch */
-  line-height: 0;        /* Removes ghost padding */
+  position: relative;
   width: 100%;
-  aspect-ratio: 6 / 4;   /* Matches your 6x4 piece count */
-  background: white;     /* This is your "White Box" background */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  height: 100%;
+  aspect-ratio: 500 / 330;
+  background: transparent;
+}
+
+.puzzle-full-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
 }
 
 .puzzle-piece {
-  width: 100% !important;
-  height: 100% !important;
+  position: absolute;
+  left: calc((var(--piece-x) / 500) * 100%);
+  top: calc((var(--piece-y) / 330) * 100%);
+  width: calc((var(--piece-width) / 500) * 100%);
+  height: calc((var(--piece-height) / 330) * 100%);
   display: block;
-  object-fit: fill; /* This is key: it forces the SVG to fill the grid square */
-  
-  /* If the exports are still slightly off, this 1% scale bridges the gap */
-  transform: scale(1.01); 
+  object-fit: contain;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  z-index: 2;
 }
 
 /* --- THE BACK --- */
 .puzzle-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: white; /* Matches the front's white box */
-  transform: rotateY(180deg);
+  background: white;
+  border-radius: 18px;
   padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: left;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* --- 8. TOGGLE SECTION (RESTORED WITH LAYERING FIX) --- */
@@ -405,11 +455,11 @@ p {
 /* Restores standard centered text content width and position */
 #toggle .section__content {
   width: 100%;
-  max-width: 800px; /* Or whatever your original max-width was */
+  max-width: 1000px;
   margin: 0 auto;
   position: relative;
   z-index: 10;
-  text-align: center; /* Ensures text stays centered */
+  text-align: left;
 }
 
 /* 2. Position the Girl container relative to the text box */
@@ -465,3 +515,16 @@ body.on-the-wall .img-on-wall {
   transform: translateX(35vw) scale(1.15); 
   transform-origin: center right; /* Optional: Scale happens from the right edge */
 }
+/* Puzzle front transparency override */
+#conditionals .puzzle-front {
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+#conditionals .puzzle-grid {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+

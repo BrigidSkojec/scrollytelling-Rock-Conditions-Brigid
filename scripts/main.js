@@ -129,52 +129,105 @@ sectionHeaders.forEach((header) => {
 
 // --- 7. CONDITIONALS PUZZLE SCROLL TIMELINE ---
 
-// Let GSAP strictly set the 3D rules so CSS doesn't fight it
-gsap.set(".puzzle-flip-inner", { transformStyle: "preserve-3d" });
+const puzzlePieceLayout = {
+  puzzle1: { x: -1.29, y: 0, width: 83.33, height: 107.25 },
+  puzzle2: { x: 55.76, y: 0, width: 133.33, height: 82.5 },
+  puzzle3: { x: 165.38, y: 0, width: 83.33, height: 107.25 },
+  puzzle4: { x: 225, y: 0, width: 133.33, height: 82.5 },
+  puzzle5: { x: 333.33, y: 0, width: 83.34, height: 107.25 },
+  puzzle6: { x: 391.67, y: 0, width: 108.33, height: 82.5 },
+  puzzle7: { x: 0, y: 82.5, width: 108.33, height: 82.5 },
+  puzzle8: { x: 83.33, y: 57.75, width: 83.33, height: 132 },
+  puzzle9: { x: 141.67, y: 82.5, width: 133.33, height: 82.5 },
+  puzzle10: { x: 248.71, y: 57.75, width: 83.33, height: 132 },
+  puzzle11: { x: 305.76, y: 82.5, width: 133.33, height: 82.5 },
+  puzzle12: { x: 415.38, y: 57.75, width: 83.33, height: 132 },
+  puzzle13: { x: -1.29, y: 140.25, width: 83.33, height: 132 },
+  puzzle14: { x: 55.76, y: 165, width: 133.33, height: 82.5 },
+  puzzle15: { x: 165.38, y: 140.25, width: 83.33, height: 132 },
+  puzzle16: { x: 225, y: 165, width: 133.33, height: 82.5 },
+  puzzle17: { x: 333.33, y: 140.25, width: 83.34, height: 132 },
+  puzzle18: { x: 391.67, y: 165, width: 108.33, height: 82.5 },
+  puzzle19: { x: 0, y: 247.5, width: 108.33, height: 82.5 },
+  puzzle20: { x: 83.33, y: 222.75, width: 83.33, height: 107.25 },
+  puzzle21: { x: 141.67, y: 247.5, width: 133.33, height: 82.5 },
+  puzzle22: { x: 248.71, y: 222.75, width: 83.33, height: 107.25 },
+  puzzle23: { x: 305.76, y: 247.5, width: 133.33, height: 82.5 },
+  puzzle24: { x: 415.38, y: 222.75, width: 83.33, height: 107.25 }
+};
 
-// HIDE THE WHITE BOX: autoAlpha sets it to visibility:hidden so it CANNOT be seen early
-gsap.set(".puzzle-back", { rotationY: 180, autoAlpha: 0 }); 
+const puzzlePieces = gsap.utils.toArray('.puzzle-piece');
+
+puzzlePieces.forEach((piece) => {
+  const pieceName = piece.getAttribute('src').split('/').pop().replace('.svg', '');
+  const layout = puzzlePieceLayout[pieceName];
+
+  if (!layout) {
+    return;
+  }
+
+  piece.style.setProperty('--piece-x', layout.x);
+  piece.style.setProperty('--piece-y', layout.y);
+  piece.style.setProperty('--piece-width', layout.width);
+  piece.style.setProperty('--piece-height', layout.height);
+});
+
+gsap.set('.puzzle-flip-inner', { transformStyle: 'preserve-3d' });
+gsap.set('.puzzle-back', { rotationY: 180, autoAlpha: 0 });
+gsap.set('.puzzle-full-image', { autoAlpha: 0 });
+gsap.set('.puzzle-piece', { filter: 'drop-shadow(0px 14px 22px rgba(0,0,0,0.18))' });
 
 const puzzleTl = gsap.timeline({
   scrollTrigger: {
-    trigger: "#conditionals",
-    start: "top top", // Locks exactly when the section hits the top of the monitor
-    end: "+=2500",    // Gives a massive 2500px of scroll space to enjoy the animation
-    pin: true,        // THE MAGIC TRICK: Freezes the screen!
-    scrub: 1,      
+    trigger: '#conditionals',
+    start: 'top top',
+    end: '+=2500',
+    pin: true,
+    scrub: 1,
+    refreshPriority: 10,
   }
 });
 
-// Step A: Fly the pieces in
-puzzleTl.from(".puzzle-piece", {
-  x: () => gsap.utils.random(-1500, 1500), // Flung even further off-screen       
-  y: () => gsap.utils.random(-1500, 1500),       
-  rotation: () => gsap.utils.random(-360, 360), 
+puzzleTl.from('.puzzle-piece', {
+  x: () => gsap.utils.random(-1100, 1100),
+  y: () => gsap.utils.random(-900, 900),
+  rotation: () => gsap.utils.random(-300, 300),
+  scale: () => gsap.utils.random(0.55, 1.35),
   opacity: 0,
   duration: 2,
-  stagger: 0.02 
+  stagger: {
+    each: 0.03,
+    from: 'random'
+  },
+  ease: 'power3.out'
 })
-
-// Step B: Pause briefly on the assembled photo
-.to({}, {duration: 0.5})
-
-// Step C: Turn the white box "on" secretly right before the flip
-.set(".puzzle-back", { autoAlpha: 1 })
-
-// Step D: Spin the container
-.to(".puzzle-flip-inner", {
+.to({}, { duration: 0.35 })
+.to('.puzzle-piece', {
+  opacity: 0,
+  duration: 0.18,
+  stagger: {
+    each: 0.01,
+    from: 'random'
+  }
+}, 'revealImage')
+.to('.puzzle-full-image', {
+  autoAlpha: 1,
+  duration: 0.18,
+  ease: 'power1.out'
+}, 'revealImage')
+.set('.puzzle-back', { autoAlpha: 1 })
+.to('.puzzle-flip-inner', {
   rotationY: 180,
   duration: 1.5,
-  ease: "power2.inOut"
-}, "flipPoint") // "flipPoint" ensures Step D and E happen at the exact same time
-
-// Step E: Flatten shadows as it flips
-.to(".puzzle-piece", {
-  filter: "drop-shadow(0px 0px 0px rgba(0,0,0,0))",
+  ease: 'power2.inOut'
+}, 'flipPoint')
+.to('.puzzle-piece', {
+  filter: 'drop-shadow(0px 0px 0px rgba(0,0,0,0))',
   duration: 0.5
-}, "flipPoint");
+}, 'flipPoint');
 
-
+ScrollTrigger.sort();
+ScrollTrigger.refresh();
 
 const toggleBtn = document.querySelector('#wall-switcher');
 
