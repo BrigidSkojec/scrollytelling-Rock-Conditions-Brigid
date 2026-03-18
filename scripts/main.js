@@ -97,6 +97,73 @@ wallGlitchTl
     ease: "power2.out"
   }, ">-0.2");
 
+// --- 2D. TOKENS LIGHT-UP HOLDS ---
+gsap.set(".light-up-hold", {
+  autoAlpha: 0,
+  scale: 0.72,
+  filter: "drop-shadow(0 0 0 rgba(226, 200, 255, 0)) brightness(1) saturate(1)"
+});
+
+const holdLightTl = gsap.timeline({ paused: true });
+
+gsap.utils.toArray(".light-up-hold").forEach((hold, index) => {
+  holdLightTl.to(hold, {
+    autoAlpha: 1,
+    scale: 1,
+    duration: 0.55,
+    ease: "power2.out",
+    filter: "drop-shadow(0 0 30px rgba(226, 200, 255, 0.98)) brightness(1.45) saturate(1.3)"
+  }, index === 0 ? 0 : ">+=0.22");
+});
+
+let holdLightDelay;
+
+ScrollTrigger.create({
+  trigger: "#tokens",
+  start: "top 70%",
+  onEnter: () => {
+    if (holdLightDelay) {
+      holdLightDelay.kill();
+    }
+    holdLightDelay = gsap.delayedCall(2.5, () => holdLightTl.restart(true));
+  },
+  onEnterBack: () => {
+    if (holdLightDelay) {
+      holdLightDelay.kill();
+    }
+    holdLightDelay = gsap.delayedCall(2.5, () => holdLightTl.restart(true));
+  },
+  onLeaveBack: () => {
+    if (holdLightDelay) {
+      holdLightDelay.kill();
+    }
+    holdLightTl.pause(0);
+    gsap.set(".light-up-hold", {
+      autoAlpha: 0,
+      scale: 0.72,
+      filter: "drop-shadow(0 0 0 rgba(226, 200, 255, 0)) brightness(1) saturate(1)"
+    });
+  }
+});
+
+// --- 2E. WALL FADE-OUT BEFORE MEMORY ---
+gsap.fromTo(".background-walls",
+  {
+    opacity: 1,
+    clipPath: "inset(0% 0% 0% 0%)"
+  },
+  {
+    opacity: 0,
+    clipPath: "inset(0% 0% 100% 0%)",
+    scrollTrigger: {
+      trigger: "#memory",
+      start: "top 120%",
+      end: "top 60%",
+      scrub: true
+    }
+  }
+);
+
 // --- 3. CLIMBER IMAGE LOOP ---
 const chillClimber = document.querySelector('.climber--chill');
 const dangleClimber = document.querySelector('.climber--dangling');
@@ -305,6 +372,141 @@ puzzleTl.from('.puzzle-piece', {
 
 ScrollTrigger.sort();
 ScrollTrigger.refresh();
+
+// --- 8. LOCAL STORAGE MEMORY TIMELINE ---
+const memoryStage = document.querySelector(".memory-stage");
+const thinker = document.querySelector(".memory-thinker");
+const brainRotation = document.querySelector(".brain-rotation");
+const brainZoom = document.querySelector(".brain-zoom");
+const noteLeft = document.querySelector(".brain-note--left");
+const noteRight = document.querySelector(".brain-note--right");
+
+const brainFrames = {
+  front: document.querySelector(".brain-frame--front"),
+  quarters: document.querySelector(".brain-frame--quarters"),
+  left: document.querySelector(".brain-frame--left"),
+  back: document.querySelector(".brain-frame--back"),
+  quartersFlip: document.querySelector(".brain-frame--quarters-flip"),
+  right: document.querySelector(".brain-frame--right")
+};
+
+if (memoryStage && thinker && brainRotation && brainZoom && noteLeft && noteRight) {
+  gsap.set([thinker, brainZoom, noteLeft, noteRight], { autoAlpha: 0 });
+  gsap.set(brainRotation, { autoAlpha: 1 });
+  gsap.set(thinker, { y: 320, scale: 0.8, xPercent: -50 });
+  gsap.set(Object.values(brainFrames), { autoAlpha: 0 });
+  gsap.set(brainZoom, { scale: 1, xPercent: -50, yPercent: -50 });
+
+  const memoryTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#memory",
+      start: "top top",
+      end: "+=4200",
+      pin: true,
+      scrub: true
+    }
+  });
+
+  memoryTl
+    .to(thinker, {
+      autoAlpha: 1,
+      y: -40,
+      scale: 1,
+      duration: 2.4,
+      ease: "power3.out"
+    })
+    .to(thinker, {
+      y: 110,
+      duration: 1.2,
+      ease: "elastic.out(1, 0.5)"
+    })
+    .to({}, { duration: 1.2 })
+    .to(thinker, {
+      scale: 3.6,
+      x: -80,
+      y: 40,
+      duration: 3.8,
+      ease: "power2.inOut",
+      transformOrigin: "60% 18%"
+    }, "+=1.0")
+    .to(thinker, {
+      autoAlpha: 0,
+      duration: 1.0,
+      ease: "power1.out"
+    }, ">-0.2")
+    .to(brainFrames.front, {
+      autoAlpha: 1,
+      duration: 0.9,
+      ease: "power1.out"
+    }, "<");
+
+  [
+    brainFrames.quarters,
+    brainFrames.left,
+    brainFrames.back,
+    brainFrames.quartersFlip,
+    brainFrames.right,
+    brainFrames.front
+  ].forEach((frame) => {
+    memoryTl
+      .to(Object.values(brainFrames), {
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: "power1.inOut"
+      })
+      .to(frame, {
+        autoAlpha: 1,
+        duration: 0.4,
+        ease: "power1.inOut"
+      }, "<");
+  });
+
+  memoryTl
+    .to(Object.values(brainFrames), {
+      autoAlpha: 0,
+      duration: 0.4,
+      ease: "power1.inOut"
+    })
+    .to(brainZoom, {
+      autoAlpha: 1,
+      duration: 0.5,
+      ease: "power1.out"
+    }, "<")
+    .to(brainZoom, {
+      scale: 3.0,
+      x: -340,
+      y: -260,
+      transformOrigin: "top left",
+      duration: 2.0,
+      ease: "power2.inOut"
+    })
+    .to("#memory h2", {
+      autoAlpha: 0,
+      duration: 0.6,
+      ease: "power1.out"
+    }, "<+0.6")
+    .to(noteLeft, {
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      ease: "elastic.out(1, 0.5)"
+    }, "+=0.2")
+    .to({}, { duration: 1.4 })
+    .to(brainZoom, {
+      x: -780,
+      y: -260,
+      duration: 1.6,
+      ease: "power2.inOut"
+    }, "+=0.4")
+    .to(noteRight, {
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      ease: "elastic.out(1, 0.5)"
+    }, "+=0.4");
+}
 
 const toggleBtn = document.querySelector('#wall-switcher');
 
