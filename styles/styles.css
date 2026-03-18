@@ -892,4 +892,25 @@ body.on-the-wall .img-on-wall {
   box-shadow: none !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+  .floating-cliff,
+  .climber-stack,
+  .btn-toggle span,
+  .brain-zoom__image {
+    animation: none !important;
+  }
+
+  .theme-toggle,
+  .toggle-img,
+  body {
+    transition: none !important;
+  }
+}
+
 

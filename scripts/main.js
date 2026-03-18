@@ -67,6 +67,37 @@ systemThemeQuery.addEventListener("change", () => {
   }
 });
 
+const prefersReducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const prefersReducedMotion = prefersReducedMotionQuery.matches;
+
+function setupReducedMotionStates() {
+  gsap.set(".floating-cliff", { clearProps: "all" });
+  gsap.set(".background-walls", { opacity: 1, clipPath: "none" });
+  gsap.set(".wall--left, .wall--right", { opacity: 0 });
+  gsap.set(".wall--whole", { autoAlpha: 1 });
+  gsap.set(".wall-glitch-overlay", { autoAlpha: 0 });
+  gsap.set(".light-up-hold", {
+    autoAlpha: 1,
+    scale: 1,
+    filter: "drop-shadow(0 0 18px rgba(226, 200, 255, 0.7)) brightness(1.25) saturate(1.15)"
+  });
+  gsap.set(".paper-note--right, .paper-note--left, .paper-note--center", { opacity: 1, x: 0, y: 0 });
+  gsap.set('h2:not(#memory h2)', { opacity: 1, x: 0 });
+  gsap.set(".puzzle-front", { autoAlpha: 0 });
+  gsap.set(".puzzle-back", { autoAlpha: 1, rotationY: 0, pointerEvents: "auto" });
+  gsap.set(".puzzle-flip-inner", { rotationY: 0 });
+  gsap.set(".puzzle-angry-gif", { opacity: 1, y: 0 });
+  gsap.set(".memory-thinker, .brain-rotation", { autoAlpha: 0 });
+  gsap.set("#memory h2", { autoAlpha: 1, x: 0 });
+  gsap.set(".brain-zoom", { autoAlpha: 1, scale: 1, x: 0, y: 0, xPercent: -50, yPercent: -50 });
+  gsap.set(".brain-note--left, .brain-note--right", { autoAlpha: 1, y: 0, scale: 1, x: 0 });
+  gsap.set(".memory-frog", { autoAlpha: 1 });
+}
+
+if (prefersReducedMotion) {
+  setupReducedMotionStates();
+} else {
+
 // --- 1. THE CLIFF FADE OUT ---
 gsap.to(".floating-cliff", {
   opacity: 0,
@@ -600,6 +631,7 @@ if (memoryStage && memoryTitle && thinker && brainRotation && brainZoom && noteL
       duration: 0.45,
       ease: "power1.out"
     }, "+=1.2");
+}
 }
 
 const toggleBtn = document.querySelector('#wall-switcher');
