@@ -2,6 +2,29 @@
 [https://brigidskojec.github.io/scrollytelling-Rock-Conditions-Brigid/]
 Student-facing repo for final project execution and turn-in.
 
+# Reflection
+
+## Metaphor summary
+My metaphor was rock climbing. Specifically bouldering. It has many aspects that can be related to learning JavaScript. It is a puzzle and is therefore challenging. It is something you have to work out, and knowing specific techniques will certainly aid you. 
+  
+
+## One strongest sections and why
+I think my strongest section would be the local storage section. Because I enjoy the animations there, and it has something I drew in there. It is just the section I like looking at the most, and I feel it can reflect on what is being said in the text, as well as how I feel. It isn't super on the rock climber theme per se. But, I like having something else in there that is more a reflection of my brain, and not all climbing.
+
+## One bug solved and how
+Well, Codex deleted everything because I said to undo one thing, and that was a nightmare. As it also decided I was out of chats for the time, and had to upgrade or wait several days. And when I upgraded it wouldn't work. Eventually, I managed to get it to work and salvaged my work.
+
+## What to improve with more time
+I think I would just add a lot more little things. I would try to space things out a bit better for a nicer scroll experience. But I did the best I could with the time.
+
+
+
+
+
+
+
+
+
 ## Why This Repo Uses Issues
 
 Issues are required because they mirror real development workflow.
