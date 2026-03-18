@@ -17,6 +17,17 @@
 </head>
 <body>
 
+<div class="theme-controls">
+  <button class="theme-toggle theme-toggle--system" id="theme-system-toggle" type="button" aria-label="Use system theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-6.25v1.75h2.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5h2.5V17.5H4A1.5 1.5 0 0 1 2.5 16V7A1.5 1.5 0 0 1 4 5.5Zm0 1.5V16h16V7H4Z" fill="currentColor"/>
+    </svg>
+  </button>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
+    Dark mode
+  </button>
+</div>
+
 <div class="background-walls">
     <img src="assets/svgs/left-wall.svg" alt="Left climbing wall" class="wall wall--left">
     <img src="assets/svgs/right-wall.svg" alt="Right climbing wall" class="wall wall--right">
@@ -187,7 +198,9 @@
             <img src="assets/svgs/right-side-brain.svg" alt="" class="brain-frame brain-frame--right">
           </div>
 
-          <img src="assets/svgs/brain-for-zoom.svg" alt="" class="brain-zoom">
+          <div class="brain-zoom">
+            <img src="assets/svgs/brain-for-zoom.svg" alt="" class="brain-zoom__image">
+          </div>
 
           <div class="brain-note brain-note--left">
             <img src="assets/images/pin-note-1.png" alt="Pinned note about localStorage" class="brain-note__paper">
@@ -198,15 +211,29 @@
             <img src="assets/images/pin-note-2.png" alt="Pinned note about browser memory" class="brain-note__paper">
             <p>It ensures the browser remembers the actions<br>the user takes, just like my body remembers<br>that a specific foothold is slippery so I can<br>adjust on the next attempt.</p>
           </div>
+
+          <div class="memory-frog">
+            <img src="assets/images/frog-smash.gif" alt="Frog smashing a laptop">
+            <div class="memory-frog__thought">
+              <span class="memory-frog__bubble memory-frog__bubble--1"></span>
+              <span class="memory-frog__bubble memory-frog__bubble--2"></span>
+              <p>Me trying to work on this final</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section section--chapter" id="conclusion">
+      <img src="assets/images/cliff-edge-top.png" alt="Rock cliff edge" class="conclusion-cliff">
+      <div class="conclusion-girl">
+        <img src="assets/images/girl-standing-happy.png" alt="Happy climber standing" class="conclusion-girl__image conclusion-girl--happy">
+        <img src="assets/images/girl-catch-breath.png" alt="Climber catching her breath" class="conclusion-girl__image conclusion-girl--breath">
+      </div>
       <div class="section__content">
         <h2>The Send</h2>
         <p>Overall, this has been a treacherous journey. Rocky, to say the least. I am still learning, and I am nowhere near a pro developer or a pro climber.</p>
-        <p>But I’m somewhere on the wall, and I am figuring out the next move.</p>
+        <p>Sometimes I’ll reach the end with ease, and feel confident in my abilities. And others I won’t finish anything I try to do. But I’m somewhere on the wall, and I am figuring out the next move.</p>
       </div>
     </section>
   </main>

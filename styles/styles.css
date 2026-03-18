@@ -13,6 +13,7 @@ body {
   font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
   color: var(--brand-colors-text-color-secondary, #59202b);
   overflow-x: hidden; 
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* --- 3. TYPOGRAPHY (Headers vs Paragraphs) --- */
@@ -38,6 +39,61 @@ p {
   font-size: var(--font-size-font-size-m, 20px);
   line-height: 1.6;
   margin-bottom: 20px;
+}
+
+.theme-controls {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle {
+  padding: 12px 18px;
+  border: 2px solid var(--brand-colors-text-color-secondary, #59202b);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--brand-colors-text-color-secondary, #59202b);
+  font-family: var(--fonts-font-family-headers, 'Inclusive Sans', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.theme-toggle--system {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle--system svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.theme-toggle.is-active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* --- 4. SECTION RHYTHM & LAYOUT --- */
@@ -104,6 +160,7 @@ p {
 .paper-text {
   position: relative;
   z-index: 1; /* Pops the text up on top of the image */
+  color: #59202b;
 }
 
 .blue-blob {
@@ -484,6 +541,7 @@ p {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  color: #59202b;
 }
 
 .puzzle-angry-gif {
@@ -515,6 +573,10 @@ p {
 
 #tokens {
   margin-bottom: 100vh;
+}
+
+#tokens h2 {
+  color: #59202b;
 }
 
 #memory {
@@ -563,6 +625,27 @@ p {
   opacity: 0;
 }
 
+.brain-zoom__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  animation: brain-breathe 3.2s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes brain-breathe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .brain-frame--quarters-flip {
   transform: scaleX(-1);
 }
@@ -600,17 +683,137 @@ p {
 
 .brain-note p {
   position: absolute;
-  top: 30%;
+  top: 34%;
   left: 26%;
   width: 56%;
   height: 44%;
   margin: 0;
   overflow: hidden;
-  color: var(--brand-colors-text-color-secondary, #59202b);
+  color: #59202b;
   font-size: clamp(0.7rem, 0.9vw, 0.95rem);
   line-height: 1.4;
   text-align: left;
   z-index: 1;
+}
+
+.brain-note--right p {
+  top: 37%;
+  left: 23%;
+}
+
+.brain-note--left p {
+  top: 36%;
+}
+
+.memory-frog {
+  position: absolute;
+  right: -12%;
+  top: -6%;
+  width: clamp(160px, 16vw, 250px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: visible;
+  opacity: 0;
+  z-index: 5;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+.memory-frog img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.memory-frog__thought {
+  position: absolute;
+  right: 88%;
+  top: 6%;
+  width: 180px;
+  pointer-events: none;
+}
+
+.memory-frog__thought p {
+  margin: 0;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  font-size: 0.95rem;
+  line-height: 1.25;
+  color: #59202b;
+}
+
+.memory-frog__bubble {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 50%;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.memory-frog__bubble--1 {
+  width: 16px;
+  height: 16px;
+  right: -10px;
+  top: 84px;
+}
+
+.memory-frog__bubble--2 {
+  width: 10px;
+  height: 10px;
+  right: -24px;
+  top: 102px;
+}
+
+#conclusion {
+  margin-top: 45vh;
+  overflow: visible;
+}
+
+#conclusion .section__content {
+  padding-top: calc(58vh + 400px);
+  position: relative;
+  z-index: 3;
+}
+
+.conclusion-cliff {
+  position: absolute;
+  left: -4%;
+  bottom: calc(-28% - 200px);
+  width: min(72vw, 1050px);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.conclusion-girl {
+  position: absolute;
+  left: calc(5% - 100px);
+  bottom: calc(-28% + 215px);
+  width: min(54vw, 900px);
+  display: grid;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.conclusion-girl__image {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: left bottom;
+}
+
+.conclusion-girl--happy {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+.conclusion-girl--breath {
+  opacity: 0;
+  transform: translate(-190px, 0) scale(0.72);
 }
 
 /* Restores standard centered text content width and position */

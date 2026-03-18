@@ -1,6 +1,72 @@
 ﻿// Register the GSAP scroll tool
 gsap.registerPlugin(ScrollTrigger);
 
+const themeToggle = document.querySelector("#theme-toggle");
+const themeSystemToggle = document.querySelector("#theme-system-toggle");
+const rootElement = document.documentElement;
+const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+const savedTheme = localStorage.getItem("site-theme-mode");
+
+function resolveTheme(mode) {
+  if (mode === "dark") {
+    return "dark";
+  }
+
+  if (mode === "light") {
+    return "light";
+  }
+
+  return systemThemeQuery.matches ? "dark" : "light";
+}
+
+function applyThemeMode(mode) {
+  const resolvedTheme = resolveTheme(mode);
+  rootElement.setAttribute("data-theme", resolvedTheme);
+  localStorage.setItem("site-theme-mode", mode);
+  updateThemeToggleLabel(mode);
+}
+
+function updateThemeToggleLabel(mode = savedTheme || "light") {
+  if (!themeToggle || !themeSystemToggle) {
+    return;
+  }
+
+  const effectiveTheme = resolveTheme(mode);
+  themeToggle.textContent = effectiveTheme === "dark" ? "Light mode" : "Dark mode";
+  themeToggle.setAttribute("aria-pressed", mode === "dark" ? "true" : "false");
+  themeSystemToggle.setAttribute("aria-pressed", mode === "system" ? "true" : "false");
+  themeToggle.classList.toggle("is-active", mode !== "system");
+  themeSystemToggle.classList.toggle("is-active", mode === "system");
+}
+
+const initialThemeMode =
+  savedTheme === "light" || savedTheme === "dark" || savedTheme === "system"
+    ? savedTheme
+    : "light";
+
+applyThemeMode(initialThemeMode);
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const currentMode = localStorage.getItem("site-theme-mode") || "light";
+    const effectiveTheme = resolveTheme(currentMode);
+    applyThemeMode(effectiveTheme === "dark" ? "light" : "dark");
+  });
+}
+
+if (themeSystemToggle) {
+  themeSystemToggle.addEventListener("click", () => {
+    applyThemeMode("system");
+  });
+}
+
+systemThemeQuery.addEventListener("change", () => {
+  const currentMode = localStorage.getItem("site-theme-mode") || "light";
+  if (currentMode === "system") {
+    applyThemeMode("system");
+  }
+});
+
 // --- 1. THE CLIFF FADE OUT ---
 gsap.to(".floating-cliff", {
   opacity: 0,
@@ -238,10 +304,27 @@ gsap.utils.toArray('.parallax-fast').forEach(hold => {
 // Start the loop!
 setInterval(crossFadeClimber, 2100);
 
+const conclusionHappy = document.querySelector(".conclusion-girl--happy");
+const conclusionBreath = document.querySelector(".conclusion-girl--breath");
+
+function crossFadeConclusionGirl() {
+  if (!conclusionHappy || !conclusionBreath) {
+    return;
+  }
+
+  const tl = gsap.timeline();
+  tl.to(conclusionHappy, { opacity: 0, duration: 0.45 })
+    .to(conclusionBreath, { opacity: 1, duration: 0.45 }, "<")
+    .to(conclusionBreath, { opacity: 0, duration: 0.45, delay: 1.6 })
+    .to(conclusionHappy, { opacity: 1, duration: 0.45 }, "<");
+}
+
+setInterval(crossFadeConclusionGirl, 2950);
+
 // --- 5. GLOBAL HEADER ANIMATIONS ---
 
 // Grab every single <h2> tag on the page
-const sectionHeaders = document.querySelectorAll('h2');
+const sectionHeaders = document.querySelectorAll('h2:not(#memory h2)');
 
 // Loop through each one and give it the exact same scroll trigger
 sectionHeaders.forEach((header) => {
@@ -375,11 +458,13 @@ ScrollTrigger.refresh();
 
 // --- 8. LOCAL STORAGE MEMORY TIMELINE ---
 const memoryStage = document.querySelector(".memory-stage");
+const memoryTitle = document.querySelector("#memory h2");
 const thinker = document.querySelector(".memory-thinker");
 const brainRotation = document.querySelector(".brain-rotation");
 const brainZoom = document.querySelector(".brain-zoom");
 const noteLeft = document.querySelector(".brain-note--left");
 const noteRight = document.querySelector(".brain-note--right");
+const memoryFrog = document.querySelector(".memory-frog");
 
 const brainFrames = {
   front: document.querySelector(".brain-frame--front"),
@@ -390,8 +475,9 @@ const brainFrames = {
   right: document.querySelector(".brain-frame--right")
 };
 
-if (memoryStage && thinker && brainRotation && brainZoom && noteLeft && noteRight) {
-  gsap.set([thinker, brainZoom, noteLeft, noteRight], { autoAlpha: 0 });
+if (memoryStage && memoryTitle && thinker && brainRotation && brainZoom && noteLeft && noteRight && memoryFrog) {
+  gsap.set(memoryTitle, { autoAlpha: 1, x: 0 });
+  gsap.set([thinker, brainZoom, noteLeft, noteRight, memoryFrog], { autoAlpha: 0 });
   gsap.set(brainRotation, { autoAlpha: 1 });
   gsap.set(thinker, { y: 320, scale: 0.8, xPercent: -50 });
   gsap.set(Object.values(brainFrames), { autoAlpha: 0 });
@@ -403,22 +489,20 @@ if (memoryStage && thinker && brainRotation && brainZoom && noteLeft && noteRigh
       start: "top top",
       end: "+=4200",
       pin: true,
-      scrub: true
+      scrub: true,
+      onEnter: () => gsap.set(memoryTitle, { autoAlpha: 1, x: 0 }),
+      onEnterBack: () => gsap.set(memoryTitle, { autoAlpha: 1, x: 0 }),
+      onLeaveBack: () => gsap.set(memoryTitle, { autoAlpha: 1, x: 0 })
     }
   });
 
   memoryTl
     .to(thinker, {
       autoAlpha: 1,
-      y: -40,
+      y: 110,
       scale: 1,
       duration: 2.4,
       ease: "power3.out"
-    })
-    .to(thinker, {
-      y: 110,
-      duration: 1.2,
-      ease: "elastic.out(1, 0.5)"
     })
     .to({}, { duration: 1.2 })
     .to(thinker, {
@@ -480,7 +564,7 @@ if (memoryStage && thinker && brainRotation && brainZoom && noteLeft && noteRigh
       duration: 2.0,
       ease: "power2.inOut"
     })
-    .to("#memory h2", {
+    .to(memoryTitle, {
       autoAlpha: 0,
       duration: 0.6,
       ease: "power1.out"
@@ -499,13 +583,23 @@ if (memoryStage && thinker && brainRotation && brainZoom && noteLeft && noteRigh
       duration: 1.6,
       ease: "power2.inOut"
     }, "+=0.4")
+    .to(noteLeft, {
+      x: -440,
+      duration: 1.6,
+      ease: "power2.inOut"
+    }, "<")
     .to(noteRight, {
       autoAlpha: 1,
       y: 0,
       scale: 1,
       duration: 0.7,
       ease: "elastic.out(1, 0.5)"
-    }, "+=0.4");
+    }, "+=0.4")
+    .to(memoryFrog, {
+      autoAlpha: 1,
+      duration: 0.45,
+      ease: "power1.out"
+    }, "+=1.2");
 }
 
 const toggleBtn = document.querySelector('#wall-switcher');
