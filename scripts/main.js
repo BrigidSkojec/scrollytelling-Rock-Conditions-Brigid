@@ -1,4 +1,4 @@
-// Register the GSAP scroll tool
+﻿// Register the GSAP scroll tool
 gsap.registerPlugin(ScrollTrigger);
 
 // --- 1. THE CLIFF FADE OUT ---
@@ -31,6 +31,72 @@ gsap.fromTo(".background-walls",
   }
 );
 
+// --- 2B. SUBTLE WALL DRIFT (SLOW PARALLAX) ---
+gsap.to(".wall--left", {
+  y: -60,
+  scrollTrigger: {
+    trigger: "body",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 2
+  }
+});
+
+gsap.to(".wall--right", {
+  y: -60,
+  scrollTrigger: {
+    trigger: "body",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 2
+  }
+});
+
+// --- 2C. TOKENS WALL GLITCH + WHOLE WALL REVEAL ---
+gsap.set(".wall--whole", { autoAlpha: 0 });
+
+const wallGlitchTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: "#tokens",
+    start: "top 75%",
+    end: "top 20%",
+    scrub: 2
+  }
+});
+
+wallGlitchTl
+  .to(".wall-glitch-overlay", {
+    autoAlpha: 0.6,
+    duration: 0.2,
+    ease: "power2.out"
+  }, "<")
+  .to(".wall--left, .wall--right", {
+    opacity: 0.15,
+    x: () => gsap.utils.random(-24, 24),
+    y: () => gsap.utils.random(-16, 16),
+    filter: "hue-rotate(70deg) contrast(1.35) saturate(1.3)",
+    duration: 0.16,
+    repeat: 7,
+    yoyo: true,
+    ease: "steps(2)"
+  })
+  .to(".wall-glitch-overlay", {
+    autoAlpha: 0,
+    duration: 0.25,
+    ease: "power2.inOut"
+  }, ">-0.1")
+  .to(".wall--left, .wall--right", {
+    opacity: 0,
+    duration: 0.55,
+    ease: "power2.inOut"
+  }, ">-0.05")
+  .to(".wall--whole", {
+    autoAlpha: 1,
+    filter: "none",
+    duration: 0.75,
+    ease: "power2.out"
+  }, ">-0.2");
+
 // --- 3. CLIMBER IMAGE LOOP ---
 const chillClimber = document.querySelector('.climber--chill');
 const dangleClimber = document.querySelector('.climber--dangling');
@@ -46,31 +112,35 @@ function crossFadeClimber() {
 
 // --- 4. PAPER STRIPS DRIFT & PARALLAX ---
 
-// Right Paper Note
-gsap.fromTo(".paper-note--right",
-  { x: 100, opacity: 0, y: 150 }, // Starts 150px lower and shifted right
-  { x: 0, opacity: 1, y: 0,       // Settles perfectly into its natural spot
-    scrollTrigger: {
-      trigger: ".paper-note--right",
-      start: "top 95%",   // Starts appearing right as it enters the bottom of the screen
-      end: "top 50%",     // Finishes animating exactly at the middle of the screen!
-      scrub: true
+// Right Paper Notes
+gsap.utils.toArray(".paper-note--right").forEach((note) => {
+  gsap.fromTo(note,
+    { x: 100, opacity: 0, y: 150 }, // Starts 150px lower and shifted right
+    { x: 0, opacity: 1, y: 0,       // Settles perfectly into its natural spot
+      scrollTrigger: {
+        trigger: note,
+        start: "top 95%",   // Starts appearing right as it enters the bottom of the screen
+        end: "top 50%",     // Finishes animating exactly at the middle of the screen!
+        scrub: true
+      }
     }
-  }
-);
+  );
+});
 
-// Left Paper Note
-gsap.fromTo(".paper-note--left",
-  { x: -100, opacity: 0, y: 150 }, // Starts 150px lower and shifted left
-  { x: 0, opacity: 1, y: 0,        // Settles perfectly into its natural spot
-    scrollTrigger: {
-      trigger: ".paper-note--left",
-      start: "top 95%",
-      end: "top 50%",     // Finishes animating at the middle of the screen
-      scrub: true
+// Left Paper Notes
+gsap.utils.toArray(".paper-note--left").forEach((note) => {
+  gsap.fromTo(note,
+    { x: -100, opacity: 0, y: 150 }, // Starts 150px lower and shifted left
+    { x: 0, opacity: 1, y: 0,        // Settles perfectly into its natural spot
+      scrollTrigger: {
+        trigger: note,
+        start: "top 95%",
+        end: "top 50%",     // Finishes animating at the middle of the screen
+        scrub: true
+      }
     }
-  }
-);
+  );
+});
 
 // --- 6. FLOATING CLIMBING HOLDS (PARALLAX) ---
 
@@ -181,9 +251,9 @@ const puzzleTl = gsap.timeline({
   scrollTrigger: {
     trigger: '#conditionals',
     start: 'top top',
-    end: '+=2500',
+    end: '+=3200',
     pin: true,
-    scrub: 1,
+    scrub: 2,
     refreshPriority: 10,
   }
 });
@@ -204,16 +274,17 @@ puzzleTl.from('.puzzle-piece', {
 .to({}, { duration: 0.35 })
 .to('.puzzle-piece', {
   opacity: 0,
-  duration: 0.18,
+  duration: 0.45,
   stagger: {
     each: 0.01,
     from: 'random'
-  }
+  },
+  ease: 'power2.inOut'
 }, 'revealImage')
 .to('.puzzle-full-image', {
   autoAlpha: 1,
-  duration: 0.18,
-  ease: 'power1.out'
+  duration: 0.45,
+  ease: 'power2.inOut'
 }, 'revealImage')
 .set('.puzzle-back', { autoAlpha: 1 })
 .to('.puzzle-flip-inner', {
@@ -221,6 +292,12 @@ puzzleTl.from('.puzzle-piece', {
   duration: 1.5,
   ease: 'power2.inOut'
 }, 'flipPoint')
+.to('.puzzle-angry-gif', {
+  opacity: 1,
+  y: 0,
+  duration: 0.6,
+  ease: 'power2.out'
+}, 'flipPoint+=1.6')
 .to('.puzzle-piece', {
   filter: 'drop-shadow(0px 0px 0px rgba(0,0,0,0))',
   duration: 0.5
@@ -244,3 +321,4 @@ if (toggleBtn) {
     }
   });
 }
+

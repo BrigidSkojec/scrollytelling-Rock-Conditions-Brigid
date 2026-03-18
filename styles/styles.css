@@ -1,4 +1,4 @@
-/* --- 1. FONTS & RESET --- */
+﻿/* --- 1. FONTS & RESET --- */
 @import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Raleway:wght@400;700&family=Rubik+Glitch&family=Sigmar&display=swap');
 
 * {
@@ -84,6 +84,12 @@ p {
   margin-top: 40px; /* NEW: Adds breathing room between the two notes */
 }
 
+.paper-note--center {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
 .paper-bg {
   position: absolute;
   top: 0;
@@ -120,11 +126,13 @@ p {
   z-index: -1; 
   pointer-events: none; 
   opacity: 0; 
+  overflow: hidden;
 }
 
 .wall {
   position: absolute; 
-  height: 100vh; 
+  height: 120vh; 
+  top: -10vh;
   object-fit: cover; 
 }
 
@@ -136,6 +144,26 @@ p {
 .wall--right {
   right: 0;
   width: 25vw;
+}
+
+.wall--whole {
+  left: 0;
+  width: 100vw;
+  height: 120vh;
+  top: -10vh;
+  opacity: 0;
+}
+
+.wall-glitch-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* --- SECTION VARIANTS / HERO LAYOUT --- */
@@ -439,6 +467,19 @@ p {
   pointer-events: none;
 }
 
+.puzzle-angry-gif {
+  position: absolute;
+  left: -70px;
+  bottom: -40px;
+  width: 280px;
+  height: auto;
+  opacity: 0;
+  transform: translateY(12px);
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* --- 8. TOGGLE SECTION (RESTORED WITH LAYERING FIX) --- */
 
 /* This centers the section naturally on the screen as it was before */
@@ -450,6 +491,11 @@ p {
   align-items: center;
   position: relative;
   overflow: hidden; /* Keeps the girl from sliding off the page */
+  margin-bottom: 100vh;
+}
+
+#tokens {
+  margin-bottom: 100vh;
 }
 
 /* Restores standard centered text content width and position */
@@ -527,4 +573,5 @@ body.on-the-wall .img-on-wall {
   background: transparent !important;
   box-shadow: none !important;
 }
+
 
